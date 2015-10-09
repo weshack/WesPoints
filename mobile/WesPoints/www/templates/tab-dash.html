@@ -1,0 +1,40 @@
+<ion-view view-title="WesPoints">
+  <ion-content class="padding">
+    <div class="list card">
+      <div class="item item-divider">Meal Plan</div>
+      <div class="item item-body">
+        <div>
+          Your plan is <b>{{ plan.meals }}</b> meals and <b>{{ plan.points }}</b> points.
+          <br>
+          Ideally, this means <b>{{ plan.meals / calendar.days }}</b> meals and
+          <b>{{ plan.points / calendar.days }}</b> points per day.
+          <br>
+          In other words, this means <b>{{ plan.meals / calendar.weeks }}</b> meals and
+          <b>{{ plan.points / calendar.weeks }}</b> points per week.
+        </div>
+      </div>
+    </div>
+    <div class="list card">
+      <div class="item item-divider">Remaining</div>
+      <div class="item item-body">
+        <div>
+          You have <b>{{ remaining.meals }}</b> meals and <b>{{ remaining.points }}</b> points left.
+          <br>
+          This means <b>{{ remaining.meals / remaining.days }}</b> meals and
+          <b>{{ remaining.points / remaining.days }}</b> points per day.
+          <br>
+          In other words, this means <b>{{ remaining.meals / remaining.weeks }}</b> meals and
+          <b>{{ remaining.points / remaining.weeks }}</b> points per week.
+        </div>
+      </div>
+    </div>
+    <div class="list card">
+      <div class="item item-divider">Guest Meals</div>
+      <div class="item item-body">
+        <div>
+          You have <b>{{ remaining.guestMeals }}</b> guest meals left.
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
