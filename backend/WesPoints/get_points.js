@@ -32,6 +32,9 @@ var steps = [
       setTimeout(function(){
         console.log(document.getElementById('MainContent_mprSemQtrValue').innerHTML);
         console.log(document.getElementsByClassName('accountBalance')[2].getElementsByTagName('span')[0].innerHTML);
+        var plan = document.getElementsByClassName('accountName')[4].innerText.split(" ");
+        console.log(plan[0]);
+        console.log(plan[2]);
       }, 3000);
     });
   }

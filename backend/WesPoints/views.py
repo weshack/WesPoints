@@ -11,4 +11,4 @@ def points(request):
         return HttpResponse(status=400)
     output = subprocess.check_output(['phantomjs', 'WesPoints/get_points.js', username, pwd])
     results = output.decode('utf-8').split("\n")
-    return HttpResponse(json.dumps({ 'meals': int(results[0]), 'points': float(results[1].split(' ')[0]) }), content_type='application/json')
+    return HttpResponse(json.dumps({ 'meals': int(results[0]), 'points': float(results[1].split(' ')[0]), 'plan_meals': int(results[2]), 'plan_points': int(results[3]) }), content_type='application/json')
