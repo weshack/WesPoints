@@ -32,7 +32,7 @@ var steps = [
       setTimeout(function(){
         console.log(document.getElementById('MainContent_mprSemQtrValue').innerHTML);
         console.log(document.getElementsByClassName('accountBalance')[2].getElementsByTagName('span')[0].innerHTML);
-      }, 2000);
+      }, 3000);
     });
   }
 ];
@@ -43,7 +43,7 @@ interval = setInterval(function() {
     testindex++;
   }
   if (typeof steps[testindex] != "function") {
-    setTimeout(phantom.exit, 2500);
+    setTimeout(phantom.exit, 3500);
     return;
   }
 }, 50);
