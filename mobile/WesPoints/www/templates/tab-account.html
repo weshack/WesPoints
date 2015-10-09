@@ -1,0 +1,24 @@
+<ion-view view-title="Account">
+  <ion-content>
+
+    <div class="list">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Wesleyan user name</span>
+        <input type="text" placeholder="mroth">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Password</span>
+        <input type="password">
+      </label>
+    </div>
+
+    <ion-list>
+      <div >
+        <ion-toggle ng-repeat="b in breaks" ng-model="settings[b.name]">
+          Count pts for {{ b.name }}
+        </ion-toggle>
+      </div>
+    </ion-list>
+
+  </ion-content>
+</ion-view>
