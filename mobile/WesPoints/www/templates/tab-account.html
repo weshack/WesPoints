@@ -14,7 +14,9 @@
 
     <ion-list>
       <div >
-        <ion-toggle ng-repeat="b in breaks" ng-model="settings[b.name]">
+        <ion-toggle ng-repeat="b in breaks"
+                    ng-model="$root.settings[b.name]"
+                    ng-change="update()">
           Count pts for {{ b.name }}
         </ion-toggle>
       </div>

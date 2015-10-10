@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'LocalStorageModule'])
 
-.run(function($ionicPlatform, $rootScope) {
+.run(function($ionicPlatform, $rootScope, localStorageService) {
   $rootScope.calendar = {
     start: "September 5, 2015",
     end: "December 20, 2015",
@@ -24,11 +24,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     ]
   };
-
-  if(typeof localStorage.settings === "undefined") {
-    localStorage.settings = JSON.stringify({});
-  }
-  $rootScope.settings = JSON.parse(localStorage.settings);
+  localStorageService.set("calendar", $rootScope.calendar);
+  console.log(localStorageService.get("calendar"));
 
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -45,7 +42,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, localStorageServiceProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -85,4 +82,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/dash');
 
+  localStorageServiceProvider
+    .setPrefix('wespoints')
+    .setStorageType('sessionStorage')
+    .setNotify(true, true);
 });

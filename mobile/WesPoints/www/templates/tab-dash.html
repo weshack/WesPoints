@@ -4,13 +4,13 @@
       <div class="item item-divider">Meal Plan</div>
       <div class="item item-body">
         <div>
-          Your plan is <b>{{ plan.meals }}</b> meals and <b>{{ plan.points }}</b> points.
+          Your plan is <b>{{ plan.meals }}</b> meals and <b>{{ plan.points | number:2 }}</b> points.
           <br>
-          Ideally, this means <b>{{ plan.meals / calendar.days }}</b> meals and
-          <b>{{ plan.points / calendar.days }}</b> points per day.
+          Ideally, this means <b>{{ plan.meals / calendar.days | number:2 }}</b> meals and
+          <b>{{ plan.points / calendar.days  | number:2 }}</b> points per day.
           <br>
-          In other words, this means <b>{{ plan.meals / calendar.weeks }}</b> meals and
-          <b>{{ plan.points / calendar.weeks }}</b> points per week.
+          In other words, this means <b>{{ plan.meals / calendar.weeks | number:2 }}</b> meals and
+          <b>{{ plan.points / calendar.weeks | number:2 }}</b> points per week.
         </div>
       </div>
     </div>
@@ -18,13 +18,13 @@
       <div class="item item-divider">Remaining</div>
       <div class="item item-body">
         <div>
-          You have <b>{{ remaining.meals }}</b> meals and <b>{{ remaining.points }}</b> points left.
+          You have <b>{{ remaining.meals }}</b> meals and <b>{{ remaining.points | number:2 }}</b> points left.
           <br>
-          This means <b>{{ remaining.meals / remaining.days }}</b> meals and
-          <b>{{ remaining.points / remaining.days }}</b> points per day.
+          This means <b>{{ remaining.meals / remaining.days | number:2 }}</b> meals and
+          <b>{{ remaining.points / remaining.days | number:2 }}</b> points per day.
           <br>
-          In other words, this means <b>{{ remaining.meals / remaining.weeks }}</b> meals and
-          <b>{{ remaining.points / remaining.weeks }}</b> points per week.
+          In other words, this means <b>{{ remaining.meals / remaining.weeks | number:2 }}</b> meals and
+          <b>{{ remaining.points / remaining.weeks | number:2 }}</b> points per week.
         </div>
       </div>
     </div>
