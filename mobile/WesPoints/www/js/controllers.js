@@ -37,14 +37,11 @@ angular.module('starter.controllers', [])
     });
 
     var semesterLength = semesterWithoutBreaks.reduce(function (prev, curr) {
-      console.log(curr);
       return _.isUndefined(curr) ? prev : prev + curr.diff('days');
     }, 0);
     var remainingDays = remainingWithoutBreaks.reduce(function (prev, curr) {
       return _.isUndefined(curr) ? prev : prev + curr.diff('days');
     }, 0);
-    console.log(semesterLength);
-    console.log(remainingDays);
 
     $scope.calendar = {days: semesterLength, weeks: semesterLength / 7};
     $scope.plan = {meals: 105, points: 720};
@@ -55,7 +52,11 @@ angular.module('starter.controllers', [])
 .controller('AccountCtrl', function($scope, $rootScope, localStorageService) {
 
   $scope.breaks = localStorageService.get("calendar").breaks;
+
   $scope.update = function () {
-    localStorageService.set("settings", $rootScope);
+    localStorageService.set("settings", $rootScope.settings);
+    localStorageService.set("user", $rootScope.user);
   };
+  $rootScope.settings = localStorageService.get("settings");
+  $rootScope.user = localStorageService.get("user");
 });

@@ -7,25 +7,21 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'LocalStorageModule'])
 
-.run(function($ionicPlatform, $rootScope, localStorageService) {
-  $rootScope.calendar = {
-    start: "September 5, 2015",
-    end: "December 20, 2015",
-    breaks: [
-      {
-        name: "Fall Break",
-        start: "Oct 24, 2014",
-        end: "Oct 27, 2014"
-      },
-      {
-        name: "Thanksgiving",
-        start: "Nov 25, 2014",
-        end: "Nov 29, 2014"
-      }
-    ]
+.run(function($ionicPlatform, $rootScope, localStorageService, $http) {
+  $http.get('http://localhost:8000/calendar').then(function(data) {
+      $rootScope.calendar = data;
+      localStorageService.set("calendar", $rootScope.calendar);
+    });
+
+  $rootScope.loadLogin = function () {
+    $http.post('http://localhost:8000/points', localStorageService.get("user")).then(function (data) {
+      $rootScope.data = data;
+    });
   };
-  localStorageService.set("calendar", $rootScope.calendar);
-  console.log(localStorageService.get("calendar"));
+
+  if(!_.isUndefined(localStorageService.get("user"))) {
+    $rootScope.loadLogin();
+  }
 
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -83,7 +79,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   $urlRouterProvider.otherwise('/tab/dash');
 
   localStorageServiceProvider
-    .setPrefix('wespoints')
-    .setStorageType('sessionStorage')
-    .setNotify(true, true);
+    .setPrefix('wespoints');
 });

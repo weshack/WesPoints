@@ -12,3 +12,21 @@ def points(request):
     output = subprocess.check_output(['phantomjs', 'WesPoints/get_points.js', username, pwd])
     results = output.decode('utf-8').split("\n")
     return HttpResponse(json.dumps({ 'meals': int(results[0]), 'points': float(results[1].split(' ')[0]), 'plan_meals': int(results[2]), 'plan_points': int(results[3]) }), content_type='application/json')
+
+def calendar(request):
+  return HttpResponse(json.dumps({
+    "start": "September 5, 2015",
+    "end": "December 20, 2015",
+    "breaks": [
+      {
+        "name": "Fall Break",
+        "start": "October 24, 2015",
+        "end": "October 27, 2015"
+      },
+      {
+        "name": "Thanksgiving",
+        "start": "November 25, 2015",
+        "end": "November 29, 2015"
+      }
+    ]
+  }), content_type='application/json')
