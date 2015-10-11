@@ -35,6 +35,7 @@ var steps = [
         var plan = document.getElementsByClassName('accountName')[4].innerText.split(" ");
         console.log(plan[0]);
         console.log(plan[2]);
+        console.log(document.getElementById('MainContent_mprGuestValue').innerHTML);
       }, 3000);
     });
   }

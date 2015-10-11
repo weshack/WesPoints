@@ -9,9 +9,9 @@ def points(request):
     pwd = request.GET.get('password',request.POST.get('password'))
     if not username or not pwd:
         return HttpResponse(status=400)
-    output = subprocess.check_output(['phantomjs', 'WesPoints/get_points.js', username, pwd])
+    output = subprocess.check_output(['phantomjs', '/srv/weshack/WesPoints/backend/WesPoints/get_points.js', username, pwd])
     results = output.decode('utf-8').split("\n")
-    return HttpResponse(json.dumps({ 'meals': int(results[0]), 'points': float(results[1].split(' ')[0]), 'plan_meals': int(results[2]), 'plan_points': int(results[3]) }), content_type='application/json')
+    return HttpResponse(json.dumps({ 'meals': int(results[0]), 'points': float(results[1].split(' ')[0]), 'plan_meals': int(results[2]), 'plan_points': int(results[3]), 'guest_meals': int(results[4]) }), content_type='application/json')
 
 def calendar(request):
   return HttpResponse(json.dumps({
