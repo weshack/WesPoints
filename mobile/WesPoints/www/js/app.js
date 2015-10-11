@@ -8,13 +8,13 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'LocalStorageModule'])
 
 .run(function($ionicPlatform, $rootScope, localStorageService, $http) {
-  $http.get('http://localhost:8000/calendar').then(function(data) {
+  $http.get('http://wespoints.joomah.com/calendar').then(function(data) {
       $rootScope.calendar = data;
       localStorageService.set("calendar", $rootScope.calendar);
     });
 
   $rootScope.loadLogin = function () {
-    $http.post('http://localhost:8000/points', localStorageService.get("user")).then(function (data) {
+    $http.post('http://wespoints.joomah.com/points', localStorageService.get("user")).then(function (data) {
       $rootScope.data = data;
     });
   };
