@@ -7,19 +7,40 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'LocalStorageModule'])
 
-.run(function($ionicPlatform, $rootScope, localStorageService, $http) {
-  $http.get('http://wespoints.joomah.com/calendar').then(function(data) {
-      $rootScope.calendar = data;
-      localStorageService.set("calendar", $rootScope.calendar);
-    });
+.run(function($ionicPlatform, $rootScope, localStorageService, $http, $location, $ionicPopup, $state, $ionicLoading) {
 
   $rootScope.loadLogin = function () {
-    $http.post('http://wespoints.joomah.com/points', localStorageService.get("user")).then(function (data) {
-      $rootScope.data = data;
+    if(_.isUndefined($rootScope.data)) {
+      $ionicLoading.show({
+        template: 'Loading...'
+      });
+    }
+    var d = new FormData();
+    var user = localStorageService.get("user");
+    d.append("username", user.username);
+    d.append("password", user.password);
+
+    $http.post('http://wespoints.joomah.com/points/', d, {
+      headers: { 'Content-Type': undefined },
+      transformRequest: function(data) { return data; }
+    }).then(function (data) {
+      $rootScope.data = data.data;
+      $state.go($state.current, {}, {reload: true});
+      $ionicLoading.hide();
+    }, function (res) {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Request failed',
+        template: 'Are you sure you entered the correct password?',
+        buttons: [{text: "Go to settings"}]
+      });
+      alertPopup.then(function(res) {
+        $location.path('/account');
+      });
     });
   };
 
-  if(!_.isUndefined(localStorageService.get("user"))) {
+  var user = localStorageService.get("user");
+  if(!_.isUndefined(user) && !_.isNull(user)) {
     $rootScope.loadLogin();
   }
 
@@ -38,7 +59,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, localStorageServiceProvider) {
+.config(function($stateProvider, $urlRouterProvider, localStorageServiceProvider, $httpProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -76,7 +97,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/account');
 
   localStorageServiceProvider
     .setPrefix('wespoints');

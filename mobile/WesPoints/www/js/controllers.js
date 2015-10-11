@@ -3,6 +3,14 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', function($scope, $rootScope, localStorageService) {
 
   $scope.$on('$ionicView.enter', function() {
+    if(_.isUndefined($rootScope.data)) {
+      $scope.calendar = {days: 0, weeks: 0};
+      $scope.plan = {meals: 0, points: 0};
+      $scope.remaining = {meals: 0, points: 0, days: 0, weeks: 0, guestMeals: 0};
+    }
+
+    $rootScope.loadLogin();
+
     var calendar = localStorageService.get("calendar");
     var settings = localStorageService.get("settings");
 
@@ -44,14 +52,20 @@ angular.module('starter.controllers', [])
     }, 0);
 
     $scope.calendar = {days: semesterLength, weeks: semesterLength / 7};
-    $scope.plan = {meals: 105, points: 720};
-    $scope.remaining = {meals: 72, points: 417.45, days: remainingDays, weeks: remainingDays / 7, guestMeals: 7};
+    $scope.plan = {meals: $rootScope.data.plan_meals, points: $rootScope.data.plan_points};
+    $scope.remaining = {meals: $rootScope.data.meals, points: $rootScope.data.points, days: remainingDays, weeks: remainingDays / 7, guestMeals: $rootScope.data.guest_meals};
+
   });
 })
 
-.controller('AccountCtrl', function($scope, $rootScope, localStorageService) {
+.controller('AccountCtrl', function($scope, $rootScope, localStorageService, $http, $state) {
 
-  $scope.breaks = localStorageService.get("calendar").breaks;
+  $http.get('http://wespoints.joomah.com/calendar').then(function(data) {
+    $rootScope.calendar = data.data;
+    localStorageService.set("calendar", $rootScope.calendar);
+    $scope.breaks = localStorageService.get("calendar").breaks;
+    $state.go($state.current, {}, {reload: true});
+  });
 
   $scope.update = function () {
     localStorageService.set("settings", $rootScope.settings);
